@@ -1,0 +1,31 @@
+Root CA
+
+openssl genrsa -aes256 -out root-ca.key 4096 // this is the root private key
+// now creating the csr
+cd /etc/pki/tls
+vim openssl.conf // contains the default parameters for the csr template
+openssl req -config openssl.conf -key private/root-ca.key -new -days 3650 -sha256 -x509  -extensions v3_ca -out certs/root-ca.crt
+
+//to decode the certificate into text format 
+openssl x509 -in root-ca.crt -text
+
+Then sub ca
+
+the create a server certificae
+
+then use a client and create a server certificate for creaating a https connection
+
+
+    Khusi Nightclub
+    Zero Degree Disco and Lounge
+    Royal Sky
+    Grand Cabana
+    Big Daddy
+    Farzi Cafe
+    Munick Bistro and Bar
+    Percussion
+
+Charbagh Railway Station
+‘Choti Line'(Lucknow Junction)
+Besides 'Choti line’ there is an overpass. 
+You can approach them below ‘Choti Line' as well

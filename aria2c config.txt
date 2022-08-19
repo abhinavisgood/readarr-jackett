@@ -1,0 +1,1 @@
+aria2c   --enable-rpc  --file-allocation=none --always-resume true --allow-overwrite true --allow-piece-length-change true --rpc-user=admin --rpc-secret=FuckMe@1234#  --rpc-listen-all true --interface=0.0.0.0 --optimize-concurrent-downloads true -d $PWD/down -j 1

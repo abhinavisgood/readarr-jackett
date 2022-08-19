@@ -1,0 +1,142 @@
+podman run -d \
+  --name=deluge \
+  -e PUID=0 \
+  -e PGID=0 \
+  -e TZ=Europe/London \
+  -e DELUGE_LOGLEVEL=error \
+  -p 8000:8112 \
+  -p 58846:58846 \
+  -v $PWD/qbit/config:/config \
+  -v $PWD/down:/downloads \
+  --restart unless-stopped \
+  lscr.io/linuxserver/deluge
+
+sudo docker create --name=sonarr \
+--restart=always \
+-p 8989:8989 \
+-e PUID=0 -e PGID=0 \
+-v /dev/rtc:/dev/rtc:ro \
+-v $PWD/conf:/config \
+-v $PWD/tv:/tv \
+-v $PWD/down:/downloads \
+linuxserver/sonarr
+
+
+
+docker run -d \
+  --name=rad \
+  -e PUID=0 \
+  -e PGID=0 \
+-v /dev/rtc:/dev/rtc:ro \
+  -p 7878:7878 \
+  -v $PWD/rad/con:/config \
+  -v $PWD/rad/mov:/movies  \
+  -v $PWD/rad/dow:/downloads  \
+  --restart always \
+  lscr.io/linuxserver/radarr
+
+docker run -d \
+  --name=nzbget \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Europe/London \
+  -p 6789:6789 \
+  -v /path/to/data:/config \
+  -v /path/to/downloads:/downloads `#optional` \
+  --restart unless-stopped \
+  lscr.io/linuxserver/nzbget
+/root/flex/mov
+/root/flex/tv
+
+
+docker run -d \
+  --name=nzbget \
+  -e PUID=0 \
+  -e PGID=0 \
+  -e TZ=Europe/London \
+  -p 6789:6789 \
+  -v $PWD/nsbconf:/config \
+  -v $PWD/down:/downloads  \
+  --restart unless-stopped \
+  lscr.io/linuxserver/nzbget
+
+
+
+
+docker run -dit \
+  --name=jack \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Europe/London \
+  -e AUTO_UPDATE=true  \
+  -p 9117:9117 \
+  -v /root/qbit/jack/conf:/config \
+  -e JACKETT_AUTOMATIC_SEARCH_TIMEOUT=120000 \
+  -e JACKETT_MANUAL_SEARCH_TIMEOUT=15000 \
+  -v /root/qbit/jack/down:/downloads \
+  --restart always \
+  lscr.io/linuxserver/jackett
+
+
+docker run -d \
+  --name=flaresolverr \
+  -p 8191:8191 \
+  -e LOG_LEVEL=info \
+  --restart always \
+  ghcr.io/flaresolverr/flaresolverr:latest
+
+docker run -d -p 8088:8000/tcp -v $PWD/.config/dim:/opt/dim/config -v $PWD/down:/media:ro ghcr.io/dusk-labs/dim:dev
+docker run -d -p 8088:8000/tcp -v $PWD/.config/dim:/opt/dim/config -v $PWD/down:/media ghcr.io/dusk-labs/dim:dev
+
+
+
+
+podman run -d -net host \
+    -v $PWD/Caddyfile:/etc/caddy/Caddyfile \
+    -v caddy_data:/data \
+    caddy
+
+podman run -d \
+  --name aria2 \
+  --restart always \
+  --log-opt max-size=1m \
+  -e PUID=0 \
+  -e PGID=0 \
+  -e UMASK_SET=022 \
+  -e RPC_SECRET=bhosadaChod@1234# \
+  -e RPC_PORT=6800 \
+  -p 6800:6800 \
+  -e LISTEN_PORT=6888 \
+  -p 6888:6888 \
+  -p 6888:6888/udp \
+  -v $PWD/rad/con:/config \
+  -v $PWD/down:/downloads \
+  p3terx/aria2-pro
+
+
+podman run -d \
+  --name=r \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -p 8089:80 \
+  -p 5000:5000 \
+  -p 51413:51413 \
+  -p 6881:6881/udp \
+  -v /root/r/con:/config \
+  -v /root/down:/downloads \
+  --restart always \
+  ghcr.io/linuxserver/rutorrent
+
+
+
+podman run -d \
+  --name=qbittorrent \
+  -e PUID=0 \
+  -e PGID=0 \
+-v /dev/rtc:/dev/rtc:ro \
+  -e WEBUI_PORT=8082 \
+  -p 8082:8082 \
+  -v /root/qbit/config:/config \
+  -v /root/down:/downloads \
+  --restart unless-stopped \
+  lscr.io/linuxserver/qbittorrent
